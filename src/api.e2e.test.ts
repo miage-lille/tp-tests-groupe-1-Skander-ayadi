@@ -75,7 +75,7 @@ describe('Webinar Routes E2E', () => {
         seats: 10,
         startDate: new Date(),
         endDate: new Date(),
-        organizerId: 'test-user',
+        organizerId: 'user',
       },
     });
 
@@ -83,16 +83,13 @@ describe('Webinar Routes E2E', () => {
     const response = await supertest(server)
       .post(`/webinars/${webinar.id}/seats`)
       .send({
-        user: {
-          id: 'test-user-not-organizer',
-          email: 'email@example.com',
-          password: 'password',
-        },
         seats: '30',
       })
       .expect(401);
 
     // ASSERT: Ensure that the error message is correct, indicating the user is not the organizer
-    expect(response.body).toEqual({ message: 'Webinar not organizer' });
+    expect(response.body).toEqual({
+      error: 'User is not allowed to update this webinar',
+    });
   });
 });
