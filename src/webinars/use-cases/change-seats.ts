@@ -5,6 +5,7 @@ import { WebinarNotOrganizerException } from 'src/webinars/exceptions/webinar-no
 import { WebinarReduceSeatsException } from 'src/webinars/exceptions/webinar-reduce-seats';
 import { WebinarTooManySeatsException } from 'src/webinars/exceptions/webinar-too-many-seats';
 import { IWebinarRepository } from 'src/webinars/ports/webinar-repository.interface';
+
 type Request = {
   user: User;
   webinarId: string;
@@ -21,7 +22,7 @@ export class ChangeSeats implements Executable<Request, Response> {
     if (!webinar) {
       throw new WebinarNotFoundException();
     }
-    if (!webinar.isOrganizer(user)) {
+    if (webinar.props.organizerId !== user.props.id) {
       throw new WebinarNotOrganizerException();
     }
     if (seats < webinar.props.seats) {
