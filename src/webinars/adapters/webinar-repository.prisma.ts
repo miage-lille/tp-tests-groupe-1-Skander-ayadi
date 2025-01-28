@@ -1,4 +1,4 @@
-import { PrismaClient, Webinair as PrismaWebinar } from '@prisma/client';
+import { PrismaClient, Webinar as PrismaWebinar } from '@prisma/client';
 import { Webinar } from '../entities/webinar.entity';
 import { IWebinarRepository } from '../ports/webinar-repository.interface';
 

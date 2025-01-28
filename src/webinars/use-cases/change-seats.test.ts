@@ -22,6 +22,11 @@ describe('Feature : Change seats', () => {
     seats: 100,
   });
 
+  beforeEach(() => {
+    webinarRepository = new InMemoryWebinarRepository([webinar]);
+    useCase = new ChangeSeats(webinarRepository);
+  });
+
   function expectWebinarToRemainUnchanged() {
     const webinar = webinarRepository.findByIdSync('webinar-id');
     expect(webinar?.props.seats).toEqual(100);
@@ -35,11 +40,6 @@ describe('Feature : Change seats', () => {
   async function whenUserChangeSeatsWith(payload) {
     await useCase.execute(payload);
   }
-
-  beforeEach(() => {
-    webinarRepository = new InMemoryWebinarRepository([webinar]);
-    useCase = new ChangeSeats(webinarRepository);
-  });
 
   describe('Scenario: Happy path', () =>{
 
